@@ -52,7 +52,7 @@
     const getMissionIds = async function(bannerId) {
         const response = await fetch(`${api}/bnrs/${encodeURIComponent(bannerId)}`);
         const banner = await response.json();
-        return Object.values(banner.missions).map(m => m.id);
+        return Object.values(banner.missions).map(m => m.id).filter(id => id);
     }
 
     const importMission = async function(request, response, token) {
