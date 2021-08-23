@@ -2,7 +2,7 @@
 // @name         Mission Creator to Bannergress
 // @match        https://missions.ingress.com/*
 // @require      https://unpkg.com/jso/dist/jso.js
-// @version      0.1
+// @version      0.2
 // @namespace    https://github.com/bannergress/creator-plugin
 // @updateURL    https://bannergress.com/creator-plugin-bannergress.user.js
 // @downloadURL  https://bannergress.com/creator-plugin-bannergress.user.js
