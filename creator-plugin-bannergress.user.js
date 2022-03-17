@@ -90,10 +90,12 @@
     }
 
     const outer = document.createElement("div");
-    outer.style = "position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 10000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px)";
+    outer.id = "mcbgBlur";
+    outer.style = "position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 10000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px)";
     document.body.appendChild(outer);
 
     const message = document.createElement("div");
+    message.id = "mcbgMessage";
     message.style = "background: black; width: 80%; height: 5em; margin: 2em; display: flex; justify-content: center; align-items: center; border: 1px solid #5afbea";
     outer.appendChild(message);
 
@@ -139,4 +141,15 @@
         message.innerText = "❌ Import failed, check console for details.";
         throw e;
     }
+
+    // add close button
+    const button = document.createElement("button");
+    button.id = "mcbgButton";
+    button.title = "X"
+    button.innerText = "X";
+    button.value = "Close";
+    button.type = "button";
+    button.style = "margin-left:2em; padding: revert;";
+    button.onclick = function (){const e = document.querySelector('#mcbgBlur');e.parentElement.removeChild(e);};
+    message.appendChild(button);
 })();
