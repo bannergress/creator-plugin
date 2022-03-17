@@ -85,7 +85,8 @@
 
     // Extract the banner to refresh
     const bannerId = new URLSearchParams(document.location.search).get("bgRefresh");
-    if (!bannerId) {
+    const missionId = new URLSearchParams(document.location.search).get("bgRefreshMission");
+    if (!bannerId && !missionId) {
         return;
     }
 
@@ -112,9 +113,15 @@
         client.callback();
         await client.getToken();
 
-        // Request mission IDs
-        message.innerText = `Requesting missions for banner ${bannerId}...`;
-        const missionIds = await getMissionIds(bannerId);
+        let missionIds;
+        if (bannerId) {
+            // Request mission IDs for given banner
+            message.innerText = `Requesting missions for banner ${bannerId}...`;
+            missionIds = await getMissionIds(bannerId);
+        } else {
+            // use given mission ID
+            missionIds = new Array(1).fill(missionId);
+        }
 
         // Confirm refresh
         if (!confirm("Refresh missions:\n" + missionIds.join("\n"))) {
