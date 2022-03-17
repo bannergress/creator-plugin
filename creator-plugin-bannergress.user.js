@@ -1,11 +1,14 @@
 // ==UserScript==
+// @id           mission-creator-to-bannergress
 // @name         Mission Creator to Bannergress
+// @category     Misc
 // @match        https://missions.ingress.com/*
 // @require      https://unpkg.com/jso@4.1.1/dist/jso.js
-// @version      0.3
+// @version      0.3.1
 // @namespace    https://github.com/bannergress/creator-plugin
 // @updateURL    https://bannergress.com/creator-plugin-bannergress.user.js
 // @downloadURL  https://bannergress.com/creator-plugin-bannergress.user.js
+// @run-at       document-idle
 // ==/UserScript==
 
 ;
