@@ -84,8 +84,9 @@
     }
 
     // Extract the banner to refresh
-    const bannerId = new URLSearchParams(document.location.search).get("bgRefresh");
-    const missionId = new URLSearchParams(document.location.search).get("bgRefreshMission");
+    const params = new URLSearchParams(document.location.search);
+    const bannerId = params.get("bgRefresh");
+    const missionId = params.get("bgRefreshMission");
     if (!bannerId && !missionId) {
         return;
     }
@@ -118,9 +119,9 @@
             // Request mission IDs for given banner
             message.innerText = `Requesting missions for banner ${bannerId}...`;
             missionIds = await getMissionIds(bannerId);
-        } else {
-            // use given mission ID
-            missionIds = new Array(1).fill(missionId);
+        } else if (missionId) {
+            const missionIdString = missionId === 'prompt' ? prompt('Mission IDs') : missionId;
+            missionIds = missionIdString.split(/[\s,;]+/);
         }
 
         // Confirm refresh
@@ -138,9 +139,15 @@
 
             // Import mission
             message.innerText = `Getting upload token...`;
-            const token = await client.getToken();
+            const token = await client.getToken({allowredir: false});
             message.innerText = `Importing mission ${missionId}...`;
-            await importMission(request, response, token.access_token);
+            try {
+                await importMission(request, response, token.access_token);
+            } catch (e) {
+                console.warn("Failed to import mission, trying again in 10 seconds...");
+                await new Promise(resolve => setTimeout(resolve, 10000));
+                await importMission(request, response, token.access_token);
+            }
         }
 
         message.innerText = "🗹 Import completed.";
