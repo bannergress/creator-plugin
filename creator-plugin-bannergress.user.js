@@ -3,7 +3,7 @@
 // @description  Connects Ingress Mission Creator to Bannergress.
 // @author       The Bannergress team
 // @match        https://missions.ingress.com/*
-// @version      0.9.2.1
+// @version      1.0
 // @namespace    https://github.com/bannergress/creator-plugin
 // @updateURL    https://bannergress.com/creator-plugin-bannergress.user.js
 // @downloadURL  https://bannergress.com/creator-plugin-bannergress.user.js
