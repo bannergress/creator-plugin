@@ -123,7 +123,7 @@
     async function rateLimit(ui) {
         ui.progress(`Waiting for next step...`);
         await rateLimiter;
-        rateLimiter = sleep(2000);
+        rateLimiter = sleep(1000);
     }
 
 
