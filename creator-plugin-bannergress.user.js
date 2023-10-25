@@ -276,7 +276,7 @@
             },
             body: payloadString
         })
-        handleError(importResponse.ok, response);
+        handleError(importResponse, response);
     }
 
     function handleError(response, data) {
