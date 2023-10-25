@@ -225,6 +225,7 @@
     /** Gets all mission IDs of a Bannergress banner, identified by its slug. */
     async function getMissionIds(slug) {
         const response = await fetch(`${api}/bnrs/${encodeURIComponent(slug)}`);
+        handleError(response);
         const banner = await response.json();
         return Object.values(banner.missions).map(m => m.id).filter(id => id);
     }
@@ -239,13 +240,14 @@
             },
             body: JSON.stringify(missionIds)
         });
+        handleError(response);
         const json = await response.json();
         return Object.entries(json).filter(pair => !pair[1].latestUpdateDetails).map(pair => pair[0]);
     }
 
     /** Uploads a missions response from getMissionsList creator api to Bannergress. */
     async function syncMissionsList(user, data) {
-        await fetch(`${api}/import/getMissionsList`, {
+        const response = await fetch(`${api}/import/getMissionsList`, {
             method: "POST",
             mode: "cors",
             headers: {
@@ -254,6 +256,7 @@
             },
             body: JSON.stringify(data)
         })
+        handleError(response);
     }
 
     /** Uploads a mission response from getMissionForProfile creator api to Bannergress. */
@@ -273,9 +276,13 @@
             },
             body: payloadString
         })
-        if (!importResponse.ok) {
-            console.error({missionId, response, importResponse});
-            throw "Error importing!";
+        handleError(importResponse.ok, response);
+    }
+
+    function handleError(response, data) {
+        if (!response.ok) {
+            console.error(response, data);
+            throw new Error(response.statusText);
         }
     }
 
