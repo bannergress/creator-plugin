@@ -23,8 +23,7 @@
     /* global oidc angular idb */
 
     if (window.location.origin !== 'https://missions.ingress.com') {
-        window.creatorPluginAvailable = true;
-        window.dispatchEvent(new Event('creatorPluginAvailable'));
+        document.body.dataset.creatorPluginAvailable = true;
         return;
     }
 
