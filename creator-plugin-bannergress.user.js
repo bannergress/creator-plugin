@@ -3,7 +3,8 @@
 // @description  Connects Ingress Mission Creator to Bannergress.
 // @author       The Bannergress team
 // @match        https://missions.ingress.com/*
-// @version      1.0
+// @match        https://bannergress.com/*
+// @version      1.1
 // @namespace    https://github.com/bannergress/creator-plugin
 // @updateURL    https://bannergress.com/creator-plugin-bannergress.user.js
 // @downloadURL  https://bannergress.com/creator-plugin-bannergress.user.js
@@ -16,6 +17,11 @@
 
 (async function() {
     /* global oidc angular */
+
+    if (window.location.origin !== 'https://missions.ingress.com') {
+        document.body.dataset.creatorPluginAvailable = true;
+        return;
+    }
 
     const api = "https://api.bannergress.com";
     const realm = "bannergress";
