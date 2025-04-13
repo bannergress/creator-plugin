@@ -13,7 +13,19 @@ This plugin syncs missions from the mission creator website to Bannergress. It d
 
 The source file creator-plugin-bannergress.user.js can directly be used as plugin in Tampermonkey or IITC button, no compilation required.
 
+## Power-users
+Usually the default settings are fine for 99% of use cases, but some users want more.
+Adding following to the local storage will skip the confirmation and set the delay between uploads to 500ms:
+
+| key                           | value |
+|-------------------------------|-------|
+| bannergress-skip-confirmation | 1     |
+| bannergress-sync-delay        | 500   |
+
+*Caution! These changes may increase the load to the mission creator servers and result unknown restrictions!*
+
 ## Known limitations
 
 * The plugin does not sync mission status for missions which have been permanently deleted, since they are not in the user list anymore.
 * The plugin does not sync mission details when mission details are available in Bannergress.
+

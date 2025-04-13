@@ -4,7 +4,7 @@
 // @author       The Bannergress team
 // @match        https://missions.ingress.com/*
 // @match        https://bannergress.com/*
-// @version      1.1
+// @version      1.2
 // @namespace    https://github.com/bannergress/creator-plugin
 // @updateURL    https://bannergress.com/creator-plugin-bannergress.user.js
 // @downloadURL  https://bannergress.com/creator-plugin-bannergress.user.js
@@ -90,7 +90,9 @@
         try {
             ui.progress(`Requesting missions for banner ${slug}...`);
             const missionIds = await getMissionIds(slug);
-            if (await ui.confirm(`Sync ${missionIds.length} missions with ${bannergressTitle}?`)) {
+            const skipConfirmation = window.localStorage.getItem("bannergress-skip-confirmation");
+            const confirmed = (skipConfirmation === "true" || skipConfirmation === "1") || await ui.confirm(`Sync ${missionIds.length} missions with ${bannergressTitle}?`);
+            if (confirmed) {
                 ui.progress("Logging in...");
                 const user = await getUser();
                 await refreshMissions(ui, user, missionIds);
@@ -129,7 +131,12 @@
     async function rateLimit(ui) {
         ui.progress(`Waiting for next step...`);
         await rateLimiter;
-        rateLimiter = sleep(1000);
+        let delay = parseInt(window.localStorage.getItem("bannergress-sync-delay") || "1000", 10);
+        if (isNaN(delay) || delay < 0) {
+            console.warn("[Bannergress Plugin] Invalid bannergress-sync-delay, falling back to 1000ms");
+            delay = 1000;
+        }
+        rateLimiter = sleep(delay);
     }
 
 
